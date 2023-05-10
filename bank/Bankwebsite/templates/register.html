@@ -1,0 +1,31 @@
+{% load static %}
+{% include "header.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link href="{% static 'css/bootstrap.min.css' %}"  rel="stylesheet" >
+    <title>Title</title>
+
+</head>
+<body style="background-color:Gray">
+<h1> USER REGISTRATION</h1>
+<form action="register" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder=" Enter your UserName"><br>
+      <input type="text" name="password" placeholder="Enter your password"><br>
+      <input type="text" name="password1" placeholder="Confirm your password"><br>
+<!--      <input type="submit"  href="{% url 'bank:login' %}">-->
+    <a href="{% url 'bank:login' %}" class="btn btn-Primary" role="button">submit</a>
+
+
+
+
+</form>
+
+<div class="container">
+
+{% include 'footer.html' %}
+    </div>
+</body>
+</html>
