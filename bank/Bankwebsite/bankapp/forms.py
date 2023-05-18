@@ -1,23 +1,28 @@
 from django import forms
+from .models import Person, City
 
-from bankapp.models import District, User, Branches
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
-
-# creating a form
-class UserForm(forms.ModelForm):
+class PersonCreationForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = Person
         fields = '__all__'
+        widgets = {
+            'DOB': DateInput(),
+            'gender':forms.RadioSelect()
+        }
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.fields['branches'].queryset = User.objects.none()
-        #
-            if 'District' in self.data:
-                try:
-                    District_id = int(self.data.get('District'))
-                    self.fields['Branches'].queryset =Branches.objects.filter( District_id=District_id).order_by('name')
-                except (ValueError, TypeError):
-                    pass
-            elif self.instance.pk:
-                self.fields['Branches'].queryset = self.instance.District.branches_set.order_by('name')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
+
+        if 'district' in self.data:
+            try:
+                district_id = int(self.data.get('district'))
+                self.fields['city'].queryset = City.objects.filter(district_id=district_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.district.city_set.order_by('name')
