@@ -1,11 +1,10 @@
-from django.contrib import admin
-from . models import District,Branches,User,Account
 
+from django.contrib import admin
+
+from .models import City, Country, Person,Account
 
 # Register your models here.
-admin.site.register(District)
-admin.site.register(Branches)
-admin.site.register(User)
+admin.site.register(Country)
+admin.site.register(City)
+admin.site.register(Person)
 admin.site.register(Account)
-
-
