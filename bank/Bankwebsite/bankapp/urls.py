@@ -1,18 +1,14 @@
 from .import views
 from django.urls import path
-app_name='bank'
+
+app_name='bankapp'
 
 urlpatterns = [
     path('',views.demo,name="demo"),
-
-    path('login', views.login, name="login"),
+    path('log', views.log, name="log"),
     path('register', views.register, name="register"),
+    path('person_create_view', views.person_create_view, name='person_add'),
+    path('<int:pk>/', views.person_update_view, name='person_change'),
 
-
-    path('add_user', views.add_user, name='add_user'),
-    # path('<int:pk>/', views.UserUpdateView.as_view(), name='person_change'),
-
-    path('load_branches/', views.userform, name='load_branches'),
-    # path('submit', views.register, name="submit"),
-
-]
+    path('ajax/load-cities/', views.load_cities, name='load_cities'),  # AJAX
+ ]
